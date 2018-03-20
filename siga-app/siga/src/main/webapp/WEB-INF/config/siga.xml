@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>    
+    <definition name="login" extends="cnt_publico">        
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerPublico.jsp" />
+            </definition>
+        </put-attribute>        
+        <put-attribute name="content" value="/WEB-INF/view/login.jsp" />         
+    </definition>
+    <definition name="error" extends="cnt_publico">        
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerPublico.jsp" />
+            </definition>
+        </put-attribute> 
+        <put-attribute name="content" value="/WEB-INF/view/error.jsp" />        
+    </definition>
+    <definition name="principal" extends="cnt_alumno">                
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerAlumno.jsp" />
+            </definition>
+        </put-attribute>  
+        <put-attribute name="content" value="/WEB-INF/view/principal.jsp" />
+    </definition>
+     <definition name="principal_asesoria" extends="cnt_interno">                
+       <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+               <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerInterno.jsp" />
+            </definition>
+        </put-attribute>     
+        <put-attribute name="content" value="/WEB-INF/view/principal_asesoria_.jsp" />      
+       
+    </definition>
+    <definition name="eleccion_asesor" extends="cnt_interno">                
+       <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+               <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerInterno.jsp" />
+            </definition>
+        </put-attribute>     
+        <put-attribute name="content" value="/WEB-INF/view/principal_asesoria.jsp" />      
+       
+    </definition>
+     <definition name="principal_datospersonales" extends="cnt_alumnoasesor">                
+       <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+               <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerPublico.jsp" />
+            </definition>
+        </put-attribute>     
+        <put-attribute name="content" value="/WEB-INF/view/principal_datospersonales.jsp" />      
+       
+    </definition>
+    <definition name="planestudio.avanceplan" extends="cnt_publico">        
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/external/headerInterno.jsp" />
+            </definition>
+        </put-attribute>       
+        <put-attribute name="contentheader">
+            <definition template="/WEB-INF/view/planestudio/contentHeader.jsp">
+                <put-attribute name="activeAvance" value="class='active'" />
+            </definition>            
+        </put-attribute>  
+        <put-attribute name="content" value="/WEB-INF/view/planestudio/avanceplan.jsp" />    
+        <put-attribute name="contentfooter" value="/WEB-INF/view/templates/external/contentFooter.jsp" />              
+    </definition>
+    <definition name="planestudio.malla" extends="cnt_publico">        
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/external/headerInterno.jsp" />
+            </definition>
+        </put-attribute> 
+        <put-attribute name="contentheader">
+            <definition template="/WEB-INF/view/planestudio/contentHeader.jsp">
+                <put-attribute name="activeMalla" value="class='active'" />
+            </definition>            
+        </put-attribute>         
+        <put-attribute name="content" value="/WEB-INF/view/planestudio/malla.jsp" />      
+        <put-attribute name="contentfooter" value="/WEB-INF/view/templates/external/contentFooter.jsp" />         
+    </definition>
+    <definition name="planestudio.eleccion.especialidad" extends="cnt_publico">        
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/external/headerInterno.jsp" />
+            </definition>
+        </put-attribute> 
+        <put-attribute name="contentheader">
+            <definition template="/WEB-INF/view/planestudio/contentHeader.jsp">
+                <put-attribute name="activeMalla" value="class='active'" />
+            </definition>            
+        </put-attribute>         
+        <put-attribute name="content" value="/WEB-INF/view/planestudio/eleccion_especialidad.jsp" />      
+        <put-attribute name="contentfooter" value="/WEB-INF/view/templates/external/contentFooter.jsp" />         
+    </definition>
+    <definition name="silabo.view" extends="cnt_publico">        
+        <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+                <put-attribute name="headercustom" value="/WEB-INF/view/templates/external/headerInterno.jsp" />
+            </definition>
+        </put-attribute> 
+        <put-attribute name="contentheader">
+            <definition template="/WEB-INF/view/silabo/contentHeader.jsp" />
+        </put-attribute>         
+        <put-attribute name="content" value="/WEB-INF/view/silabo/ver.jsp" />      
+        <put-attribute name="contentfooter" value="/WEB-INF/view/templates/external/contentFooter.jsp" />         
+    </definition> 
+    <definition name="encuesta.inicio" extends="cnt_alumnoasesor">                
+       <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+               <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerPublico.jsp" />
+            </definition>
+        </put-attribute>     
+        <put-attribute name="content" value="/WEB-INF/view/encuesta/inicio.jsp" />      
+       
+    </definition>
+     <definition name="encuesta.elegircurso" extends="cnt_alumnoasesor">                
+       <put-attribute name="header">
+            <definition template="/WEB-INF/view/templates/header.jsp">
+               <put-attribute name="headercustom" value="/WEB-INF/view/templates/headerPublico.jsp" />
+            </definition>
+        </put-attribute>     
+        <put-attribute name="content" value="/WEB-INF/view/encuesta/elegircurso.jsp" />      
+       
+    </definition>
+</tiles-definitions>
