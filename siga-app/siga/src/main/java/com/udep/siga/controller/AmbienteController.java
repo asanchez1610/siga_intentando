@@ -30,7 +30,7 @@ public class AmbienteController {
 		  
 	        Map<String, Object> data = new HashMap<String, Object>();
 	        List<Ambiente> listAmbienteDisponibles=ambienteService.getAmbientes();
-	        data.put("title", "Trámites académicos");
+	        data.put("title", "Ambientes Disponibles");
 	        data.put("moroso", listAmbienteDisponibles);
 	        return data;
 	    }

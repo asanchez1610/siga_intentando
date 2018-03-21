@@ -44,6 +44,7 @@
        <script type="text/javascript" src="<spring:message code="static.path"/>/js/form-validation.js"></script>
        <script type="text/javascript" src="<spring:message code="static.path"/>/js/main.js"></script>  
        <script type="text/javascript" src="<spring:message code="static.path"/>/js/common.js"></script>
+       <script type="text/javascript" src="<spring:message code="static.path"/>/js/ambientes.js"></script>
        
     </body>
 </html>

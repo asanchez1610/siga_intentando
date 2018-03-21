@@ -2072,7 +2072,41 @@ var app = $.sammy('#main-app', function() {
                                     
                             }
                     }).then( function() {
-                    	debugger
+                    	$('.item-ambiente').click(function(){
+                			var selected = $(this);
+                			$('.item-ambiente').removeClass('item-ambiente-selected');
+                			selected.addClass('item-ambiente-selected');
+                			$('.horario').show();
+                		});
+
+
+                		$('#txtBusqueda').keyup(function(){
+                			var b = $(this);
+                			var arr = [];
+                			if(b.val().length > 2 ){
+                			
+                				$('.item-ambiente').each(function(){
+                				var item = $(this);
+                					
+                					if(item.html().toLowerCase().indexOf(b.val().toLowerCase()) >= 0){
+                							arr.push('#'+item.data('infraestructura'));
+                							item.show();
+                					}else{
+                						item.hide();
+                					}
+                				});
+                				$('.header-item-ambiente').hide();
+                				arr.forEach(function(headerId){
+                					$(headerId).show();
+                				});
+                			
+                			}else{
+                				$('.item-ambiente').show();
+                				$('.header-item-ambiente').show();
+                			}
+                			
+                		});
+                    	
 
                     });
              

@@ -33,3 +33,14 @@ target/
 */.project
 */.classpath
 .classpath
+
+*.classpath
+siga-app/.classpath
+siga-app/.project
+siga-app/siga/.classpath
+siga-app/siga-dao/.classpath
+siga-app/siga/.project
+siga-app/siga-dao/.project
+
+*/target/
+
