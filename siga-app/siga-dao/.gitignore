@@ -1,0 +1,46 @@
+.project
+.settings
+target/
+/.project
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+.project
+.settings
+target/
+/.project
+*/.project
+*/.classpath
+.classpath
+
+*.classpath
+siga-app/.classpath
+siga-app/.project
+siga-app/siga/.classpath
+siga-app/siga-dao/.classpath
+siga-app/siga/.project
+siga-app/siga-dao/.project
+
+*/target/
+
