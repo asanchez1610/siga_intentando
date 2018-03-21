@@ -1,108 +1,15 @@
 package com.udep.siga.dao.util;
 
-import com.udep.siga.bean.Alumno;
-import com.udep.siga.bean.AlumnoEstudio;
-import com.udep.siga.bean.AlumnoEstudioPeriodoAcademico;
-import com.udep.siga.bean.Alumnocandidato;
-import com.udep.siga.bean.ArchivoInvestigacion;
-import com.udep.siga.bean.AreaInvestigacion;
-import com.udep.siga.bean.Articulo;
-import com.udep.siga.bean.AreaConocimiento;
-import com.udep.siga.bean.ArticuloCV;
-import com.udep.siga.bean.AsesorSugerido;
-import com.udep.siga.bean.Asignatura;
-import com.udep.siga.bean.AsignaturaDictada;
-import com.udep.siga.bean.AsignaturaEncuesta;
-import com.udep.siga.bean.AsignaturaHistorial;
-import com.udep.siga.bean.AsignaturaSeccion;
-import com.udep.siga.bean.Asistencia;
-import com.udep.siga.bean.AsociacionProfesionalCV;
-import com.udep.siga.bean.Aula;
-import com.udep.siga.bean.Aviso;
-import com.udep.siga.bean.BloqueHorario;
-import com.udep.siga.bean.CLCCategActividadDeportivaDest;
-import com.udep.siga.bean.CLCCategActividadDisney;
-import com.udep.siga.bean.CLCCategActividadInvestigacion;
-import com.udep.siga.bean.CLCCategActividadProyectoSocial;
-import com.udep.siga.bean.CLCCategAsigIntercambioEstud;
-import com.udep.siga.bean.CLCCategCapacitacionProfesional;
-import com.udep.siga.bean.CLCCategEstudioDirigido;
-import com.udep.siga.bean.CLCCategPractPreProfesional;
-import com.udep.siga.bean.CLCCategoriaActividad;
-import com.udep.siga.bean.CLCCategoriaAlumno;
-import com.udep.siga.bean.CLCCategoriaIdioma;
-import com.udep.siga.bean.CapacitacionCV;
-import com.udep.siga.bean.Capitulo;
-import com.udep.siga.bean.CargoDirectivoCV;
-import com.udep.siga.bean.CategoriaConsulta;
-import com.udep.siga.bean.LineaInvestigacion;
-import com.udep.siga.bean.CentroAcademico;
-import com.udep.siga.bean.Consulta;
-import com.udep.siga.bean.ConsultoriaCv;
-import com.udep.siga.bean.CursoDictadoCV;
-import com.udep.siga.bean.DatoPersonal;
-import com.udep.siga.bean.Departamento;
-import com.udep.siga.bean.Distrito;
-import com.udep.siga.bean.DocenciaCV;
-import com.udep.siga.bean.DocumentoInfo;
-import com.udep.siga.bean.DocumentoInfoCateg;
-import com.udep.siga.bean.DocumentosInvestigacion;
-import com.udep.siga.bean.Edicionestudio;
-import com.udep.siga.bean.Estudio;
-import com.udep.siga.bean.Evaluacion;
-import com.udep.siga.bean.EvaluacionAlumno;
-import com.udep.siga.bean.Mensaje;
-import com.udep.siga.bean.Nota;
-import com.udep.siga.bean.PeriodoAcademico;
-import com.udep.siga.bean.Usuario;
-import com.udep.siga.bean.Persona;
-import com.udep.siga.bean.Email;
-import com.udep.siga.bean.EmpresaCV;
-import com.udep.siga.bean.Especialidad;
-import com.udep.siga.bean.EstanciaInvestigacionCV;
-import com.udep.siga.bean.EstrategiaSilabo;
-import com.udep.siga.bean.EstudioCV;
-import com.udep.siga.bean.Evento;
-import com.udep.siga.bean.FechaCuotaPagoEspecial;
-import com.udep.siga.bean.GradoAcademico;
-import com.udep.siga.bean.GrupoPractica;
-import com.udep.siga.bean.Horario;
-import com.udep.siga.bean.HorarioAsesoria;
-import com.udep.siga.bean.HorarioEvento;
-import com.udep.siga.bean.IdiomasCV;
-import com.udep.siga.bean.Interaccion;
-import com.udep.siga.bean.InvestigacionGenerica;
-import com.udep.siga.bean.Libro;
-import com.udep.siga.bean.Material;
-import com.udep.siga.bean.MeritoCV;
-import com.udep.siga.bean.ObjetivoSilabo;
-import com.udep.siga.bean.Observacion;
-import com.udep.siga.bean.OtroTrabajoCV;
-import com.udep.siga.bean.PEAEAsignaturaEstado;
-import com.udep.siga.bean.PagoCuota;
-import com.udep.siga.bean.PagoEspecial;
-import com.udep.siga.bean.PatenteCV;
-import com.udep.siga.bean.PensionAlumno;
-import com.udep.siga.bean.PlanEstudio;
-import com.udep.siga.bean.PlanEstudioAsignatura;
-import com.udep.siga.bean.PracticaProgramada;
-import com.udep.siga.bean.PremioCV;
-import com.udep.siga.bean.Profesor;
-import com.udep.siga.bean.Provincia;
-import com.udep.siga.bean.ProyectoCV;
-import com.udep.siga.bean.RedAcademicaCV;
-import com.udep.siga.bean.RequisitoAsignatura;
-import com.udep.siga.bean.RequisitoPlanEstudio;
-import com.udep.siga.bean.RequisitoTipoAsignatura;
-import com.udep.siga.bean.ReunionEventoCV;
-import com.udep.siga.bean.Silabo;
-import com.udep.siga.bean.Solicitud;
-import com.udep.siga.bean.TemaSilabo;
-import com.udep.siga.bean.Tesis;
-import com.udep.siga.bean.TipoEvaluacion;
-import com.udep.siga.bean.TipoSolicitud;
-import com.udep.siga.bean.TrabajoInvestigacion;
-import com.udep.siga.bean.UnidadSilabo;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import org.springframework.jdbc.core.RowMapper;
+import com.udep.siga.bean.*;
 import com.udep.siga.bean.enumeration.Campus;
 import com.udep.siga.bean.enumeration.Dia;
 import com.udep.siga.bean.enumeration.EstadoAlumno;
@@ -129,14 +36,6 @@ import com.udep.siga.bean.enumeration.TipoPagoEspecial;
 import com.udep.siga.bean.enumeration.TipoPeriodoAcademico;
 import com.udep.siga.bean.enumeration.TipoRequisitoPlan;
 import com.udep.siga.bean.enumeration.TipoTesis;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import org.springframework.jdbc.core.RowMapper;
 
 /**
  *
@@ -2800,6 +2699,44 @@ public class UtilRowMapper {
             asignatura.setActivo(rs.getBoolean("ACTIVO"));
             asignatura.setSigla(rs.getString("SIGLA"));
             return asignatura;
+        }
+        
+    }
+    
+    /*
+     * Util para Entidad Ambiente
+     */
+    
+    public static RowMapper getAmbienteMapper(){
+        return new AmbienteMapper();
+    }
+    
+    private static final class AmbienteMapper implements RowMapper {
+
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Ambiente ambiente = new Ambiente();
+            ambiente.setAforo(rs.getInt("AFORO"));
+            ambiente.setAreaM2(new BigDecimal(rs.getString("AREAM2")));
+            ambiente.setCapacidadReal(rs.getInt("CAPACIDADREAL"));
+            ambiente.setDescripcion(rs.getString("DESCRIPCION"));
+            ambiente.setIdAmbiente(rs.getInt("IDAMBIENTE"));
+            Piso piso=new Piso();
+            piso.setIdPiso(rs.getInt("IDPISO"));
+            ambiente.setPiso(piso);
+            SedeInfraestructura sedeInfraestructura=new SedeInfraestructura();
+            sedeInfraestructura.setIdSedeInfraestructura(rs.getInt("IDSEDEINFRAESTRUCTURA"));
+            ambiente.setSedeInfraestructura(sedeInfraestructura);
+            TipoAmbiente tipoAmbiente=new TipoAmbiente();
+            tipoAmbiente.setIdTipoAmbiente(rs.getInt("IDTIPOAMBIENTE"));
+            ambiente.setTipoAmbiente(tipoAmbiente);
+            Unidad unidad=new Unidad();
+            unidad.setIdUnidad(rs.getInt("IDUNIDAD"));
+            unidad.setNombre("UNIDAD");
+            ambiente.setUnidad(unidad);
+            ambiente.setNombre(rs.getString("NOMBRE"));
+            ambiente.setReservable(rs.getString("RESERVABLE").charAt(0));
+            return ambiente;
+
         }
         
     }
