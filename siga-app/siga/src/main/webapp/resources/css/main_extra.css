@@ -37,14 +37,17 @@
 }
 
 .input-search {
-
 	width: 96%;
 	border: 1px #e1e1e1 solid;
 }
 
+.comboTipoUnidad{
+	width: 100% !important;
+}
+
 .comtent-items-ambiente {
 	width: 100%;
-	height: 450px;
+	height: 380px;
 	overflow-x: hidden;
 	overflow-y: auto;
 }
@@ -98,6 +101,43 @@
 	text-align: center;
 	font-size: 1.2em;
 	margin-top: 0px;
+}
+
+.loading-ambiente{
+	width: 100%;
+	text-align: center;
+	margin-top: 35px;
+}
+
+.loading-ambiente img{
+ 	width: 70px; 
+}
+
+/** RESPONSIVE **/
+@media only screen and (max-width: 1200px) {
+	.columnaAmbientes {
+		width: 45%;
+	}
+	.columnaHorario {
+		width: 45%;
+	}
+	.comtent-items-ambiente {
+		height: 380px;
+	}
+}
+
+@media only screen and (max-width: 870px) {
+	.columnaAmbientes {
+		width: 95%;
+		margin-bottom: 10px;
+	}
+	.columnaHorario {
+		width: 95%;
+	}
+	.comtent-items-ambiente {
+		height: 160px;
+		
+	}
 }
 
 /** END - Estilos para ambientes **/

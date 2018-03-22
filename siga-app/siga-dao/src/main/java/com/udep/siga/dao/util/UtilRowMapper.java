@@ -2740,4 +2740,19 @@ public class UtilRowMapper {
         }
         
     }
+    
+    
+    public static RowMapper getUnidadAllMapper(){
+        return new UnidadAllMapper();
+    }
+    
+    private static final class UnidadAllMapper implements RowMapper {
+
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Unidad unidad = new Unidad();
+            unidad.setNombre(rs.getString("NOMBRE"));
+            unidad.setIdUnidad(rs.getInt("IDUNIDAD"));
+          return unidad;
+        }
+    }
 }

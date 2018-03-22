@@ -31,7 +31,7 @@ public final class BDConstants {
     public static final String SP_HORARIOEVENTO                             ="S2_PROC_V_PERIODOACADEMICO_PREGRADO_HORARIOEVENTO";
     public static final String SP_LISTAHORARIOEVENTO                       	="S2_PROC_V_HORARIO_ALUMNO_EVENTO";
     public static final String SP_LISTAHORARIOFECHAS                       	="S2_PROC_V_HORARIO_DIASSEMANA";
-    public static final String SP_GET_AMBIENTES_DISPONIBLES					="S2_AMBIENTES_DISPONIBLES_X_BLOQUEHORARIO_PERIODOACADEMICO_CAMPUS"; 
+    public static final String SP_GET_AMBIENTES_DISPONIBLES					="S2_AMBIENTES_DISPONIBLES_X_RANGOHORARIO_PERIODOACADEMICO_CAMPUS"; 
      
     //UDF's
      public static final String FN_CHECK_LLENARENCUESTA                     = "SELECT dbo.CHECK_LLENARENCUESTA(?,?,?)";
