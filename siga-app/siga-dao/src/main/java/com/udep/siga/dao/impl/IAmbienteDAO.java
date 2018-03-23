@@ -2,6 +2,7 @@ package com.udep.siga.dao.impl;
 
 import java.math.BigDecimal;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,20 +21,23 @@ import com.udep.siga.util.BDConstants;
 public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<Ambiente> getAmbientes(int idUnidad, int idDia, int idPeriodoAcademico, int idCampus) {
+	public List<Ambiente> getAmbientes(String fechaHoy, String fechaMaxima, String fechaMinima,int idUnidad,  int idPeriodoAcademico, int idCampus) {
 		// TODO Auto-generated method stub
-		Date fechaHoy=new Date();
+		
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(this.getJdbcTemplate())
 				.withProcedureName(BDConstants.SP_GET_AMBIENTES_DISPONIBLES)
 				.returningResultSet("resulset", UtilRowMapper.getAmbienteMapper());
 
+		
+		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("IDUNIDAD", idUnidad, Types.INTEGER);
-		params.addValue("RANGOHORARIO", fechaHoy.getHours(), Types.INTEGER);
-		params.addValue("IDDIA", idDia, Types.INTEGER);
+		params.addValue("RANGOHORARIO",fechaHoy , Types.TIMESTAMP);
 		params.addValue("IDPERIODOACADEMICO", idPeriodoAcademico, Types.INTEGER);
 		params.addValue("IDCAMPUS", idCampus, Types.INTEGER);
-		System.out.println("valores :"+fechaHoy.getHours()+","+ + idUnidad + " ," + idDia + "," + idPeriodoAcademico + "," + idCampus);
+		params.addValue("LIMITEMAXIMO", fechaMaxima, Types.TIMESTAMP);
+		params.addValue("LIMITEMINIMO",fechaMinima , Types.TIMESTAMP);
+		System.out.println("valores :"+ fechaHoy+","+fechaMaxima+","+fechaMinima+","+ + idUnidad + "," + idPeriodoAcademico + "," + idCampus);
 		List<Ambiente> resulset = (List<Ambiente>) simpleJdbcCall.execute(params).get("resulset");
 
 		if (resulset.isEmpty())
