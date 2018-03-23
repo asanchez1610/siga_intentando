@@ -7,15 +7,40 @@ var Ambientes = {
 
 		},
 		
+		mostrarHorariosDiponibles:function(idAmbiente){
+			console.log('ambiente seleccionado='+idAmbiente);
+			$('.horario').html('<div class ="loading-ambiente"><img src = "resources/img/loading.gif" /></div>');
+			$.ajax({
+				method : "GET",
+				url : "json/ambientes/horario.json",
+				data : {idAmbiente:idAmbiente},
+				dataType : 'json'
+			}).done(function(response) {
+				console.log(response);
+				$('.horario').empty();
+				$('.horario').append('<h2>Hora: '+response.horaActual+'</h2>');
+				$('.horario').append('<h3>Disponibilidad</h3>');
+				if(response.listaDisponibilidad){
+					response.listaDisponibilidad.forEach(function(item){
+						$('.horario').append('<h4>'+item+'.</h4>');
+					});
+				}
+				
+				$('.horario').show();
+			});
+			
+			
+		},
 		agregarEventos: function(){
+			
+			var me = Ambientes;
 			
 			//Evento al seleccionar un ambiente	
         	$('.item-ambiente').click(function(){
-        		$('.horario').show();
     			var selected = $(this);
     			$('.item-ambiente').removeClass('item-ambiente-selected');
     			selected.addClass('item-ambiente-selected');
-    			console.log('seleccionar')
+    			me.mostrarHorariosDiponibles(selected.data('idambiente'));
     		});
 
         	//Busqueda de ambientes
@@ -146,9 +171,9 @@ var Ambientes = {
 								$('.comtent-items-ambiente').append('<div class="header-item-ambiente" id="'+'padre-'+key+'">'+mapData[key][0].unidad.nombre+'</div>');	
 							}
 							arrTemp.forEach(function(item){
-								$('.comtent-items-ambiente').append('<div class="item-ambiente" data-infraestructura="'+'padre-'+key+'">'+
+								$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-infraestructura="'+'padre-'+key+'">'+
 																		''+item.nombre+
-																		(item.piso && item.piso.nombre?'<br><small>Primer piso</small>':'')+
+																		(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
 																	 '</div>');
 							});
 						}
@@ -158,6 +183,8 @@ var Ambientes = {
 					
 					me.agregarEventos();
 					
+				}else{
+					$('.comtent-items-ambiente').html('No hay Ambientes disponibles en este momento.');
 				}
 				
 			});

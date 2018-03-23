@@ -11,10 +11,5 @@
 </div>
 </div>
 <div class ="columnaHorario horario" style="display:none;">
-	<h2>Hora: 8:15 am.</h2>
-	<h3>Disponibilidad</h3>
-	<h4>09:00 - 10:00 hrs.</h4>
-	<h4>12:00 - 14:00 hrs.</h4>
-	<h4>14:00 - 16:00 hrs.</h4>
-	<h4>20:00 - 22:00 hrs.</h4>
+	
 </div>

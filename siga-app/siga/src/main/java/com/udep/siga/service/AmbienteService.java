@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import com.udep.siga.bean.Ambiente;
 import com.udep.siga.bean.FechaEvento;
 import com.udep.siga.bean.Unidad;
 import com.udep.siga.dao.AmbienteDAO;
+import com.udep.siga.util.BDConstants;
 
 
 @Service("ambienteService")
@@ -39,7 +41,33 @@ public class AmbienteService {
         	unidad = idUnidad;
         }
         
-		List<Ambiente> list=ambienteDAO.getAmbientes(unidad, hoy.getDay(), 
+        Date fechaHoy=new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		//Desplegamos la fecha
+		Date tempDate = cal.getTime();
+		System.out.println("Fecha actual: " + tempDate);
+		
+		//Le cambiamos la hora y minutos
+		cal.set(Calendar.HOUR_OF_DAY,BDConstants.FECHA_HORA_LIMITE_MAXIMO );
+		cal.set(Calendar.MINUTE, BDConstants.FECHA_MINUTO_CERO);
+		cal.set(Calendar.SECOND, BDConstants.FECHA_MINUTO_CERO);
+		tempDate = cal.getTime();
+		
+        String fechaMaxima=sdf.format(tempDate);
+        
+    	//Le cambiamos la hora y minutos
+        
+		cal.set(Calendar.HOUR_OF_DAY,BDConstants.FECHA_HORA_LIMITE_MINIMO );
+		cal.set(Calendar.MINUTE, BDConstants.FECHA_MINUTO_CERO);
+		cal.set(Calendar.SECOND, BDConstants.FECHA_MINUTO_CERO);
+		tempDate = cal.getTime();
+        
+        String fechaMinima=sdf.format(tempDate);
+        
+		List<Ambiente> list=ambienteDAO.getAmbientes( sdf.format(fechaHoy),fechaMaxima,fechaMinima,unidad,  
 				alumno.getAlumnoEstudioList().get(0).getPeriodoAcademicoVigente().getId(),
 				alumno.getAlumnoEstudioList().get(0).getCampus().getId());
 		
@@ -66,7 +94,7 @@ public class AmbienteService {
 		 String fecha = sdf.format(now);
 		 List<FechaEvento> noDisponibles = ambienteDAO.eventosPorAmbiente(idAmbiente, fecha);
 
-		  Calendar cal = Calendar.getInstance(); 
+		  Calendar cal = GregorianCalendar.getInstance(); 
 		  cal.setTime(new Date()); 
 		  cal.set(Calendar.MINUTE, 0);
 		  cal.set(Calendar.SECOND, 0);
@@ -78,20 +106,24 @@ public class AmbienteService {
 		  int iteracciones = HORA_FIN-hora_actual;
 
 		  List<String> horariosDisponibles = new ArrayList<String>();
-		  
+		  cal.add(Calendar.HOUR, 1);
 		  if(hora_actual >= HORA_INICIO && hora_actual <= HORA_FIN) {
 			  SimpleDateFormat sdformat = new SimpleDateFormat("hh:mm a");
 			  String line = "";
 			  int horaTemp = 0;
 			  for(int i = 0 ; i < iteracciones ; i++) {
-				  
-				  horaTemp = cal.get(Calendar.HOUR);
+				 
+				  horaTemp = cal.getTime().getHours();
 				  if(!this.ocupado(horaTemp,noDisponibles)) {
 					  line = sdformat.format(cal.getTime())+" - ";
 					  cal.add(Calendar.HOUR, 1);
 					  line+=sdformat.format(cal.getTime());
 					  System.out.println(line);
-					  horariosDisponibles.add(line);
+					  if(horaTemp < HORA_FIN) {
+						  horariosDisponibles.add(line);
+					  }
+				  }else {
+						  cal.add(Calendar.HOUR, 1); 
 				  }
 				
 			  }
