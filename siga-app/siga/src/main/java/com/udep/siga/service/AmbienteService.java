@@ -99,14 +99,20 @@ public class AmbienteService {
 		  cal.set(Calendar.MINUTE, 0);
 		  cal.set(Calendar.SECOND, 0);
 		  
-		  int hora_actual = cal.get(Calendar.HOUR_OF_DAY);
+		  int hora_actual = cal.getTime().getHours();
 		  		  
 		  cal.set(Calendar.HOUR, hora_actual);
 		  
 		  int iteracciones = HORA_FIN-hora_actual;
+		  
+		  boolean postMeridiano = false;
+		  
+		  if(hora_actual >= 12) {
+			 postMeridiano = true;  
+		  }
 
 		  List<String> horariosDisponibles = new ArrayList<String>();
-		  cal.add(Calendar.HOUR, 1);
+		  cal.add(Calendar.HOUR, 1+(postMeridiano?12:0));
 		  if(hora_actual >= HORA_INICIO && hora_actual <= HORA_FIN) {
 			  SimpleDateFormat sdformat = new SimpleDateFormat("hh:mm a");
 			  String line = "";
