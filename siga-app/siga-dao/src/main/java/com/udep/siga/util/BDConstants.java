@@ -39,4 +39,8 @@ public final class BDConstants {
     public static final String FN_CHECK_ESPECIALIDADALUMNOESTUDIO           = "SELECT dbo.ESP_CHECK_ESPECIALIDADALUMNOESTUDIO(?, ?)";
     public static final String FN_GET_IDPLANESTUDIO_BYALUMNOESTUDIO         = "SELECT dbo.ESP_GET_PLANESTUDIO_ACTIVO_BYALUMNOEDICIONESTUDIO(?, ?)";
     public static final String FN_GET_ESTADO_ASIGNATURA                     = "SELECT dbo.S2_UDF_GET_ESTADO_ASIGNATURA(?, ?, ?, ?, ?, ?)";
+
+    public static final int FECHA_HORA_LIMITE_MINIMO                     = 8;
+    public static final int FECHA_HORA_LIMITE_MAXIMO                     = 22;
+    public static final int FECHA_MINUTO_CERO		                     = 0;
 }

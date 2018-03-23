@@ -8,7 +8,7 @@ import com.udep.siga.bean.Unidad;
 
 public interface AmbienteDAO {
 
-	 public List<Ambiente> getAmbientes(int idUnidad,int idDia,int idPeriodoAcademico,int idCampus);
+	 public List<Ambiente> getAmbientes(String fechaHoy, String fechaMaxima, String fechaMinima,int idUnidad,int idPeriodoAcademico,int idCampus);
 	 public List<Unidad> getUnidadSede(int idCampus);
 	 public List<FechaEvento> eventosPorAmbiente(int idAmbiente , String fecha);
 }

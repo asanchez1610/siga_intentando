@@ -158,6 +158,8 @@ var Ambientes = {
 					
 					me.agregarEventos();
 					
+				}else{
+					$('.comtent-items-ambiente').html('No hay Ambientes disponibles en este momento.');
 				}
 				
 			});
