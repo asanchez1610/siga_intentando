@@ -142,9 +142,11 @@ var Ambientes = {
 
 						arrTemp = mapData[key];
 						if(arrTemp){
-							$('.comtent-items-ambiente').append('<div class="header-item-ambiente" id="'+mapData[key][0].unidad.nombre+'-'+key+'">'+mapData[key][0].unidad.nombre+'-'+key+'</div>');
+							if($('#tipoUnidad').val() == '0'){
+								$('.comtent-items-ambiente').append('<div class="header-item-ambiente" id="'+'padre-'+key+'">'+mapData[key][0].unidad.nombre+'</div>');	
+							}
 							arrTemp.forEach(function(item){
-								$('.comtent-items-ambiente').append('<div class="item-ambiente" data-infraestructura="'+mapData[key][0].unidad.nombre+'-'+key+'">'+
+								$('.comtent-items-ambiente').append('<div class="item-ambiente" data-infraestructura="'+'padre-'+key+'">'+
 																		''+item.nombre+
 																		(item.piso && item.piso.nombre?'<br><small>Primer piso</small>':'')+
 																	 '</div>');

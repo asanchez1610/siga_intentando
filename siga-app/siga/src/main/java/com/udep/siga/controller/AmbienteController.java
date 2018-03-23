@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.udep.siga.bean.Ambiente;
+import com.udep.siga.bean.FechaEvento;
 import com.udep.siga.bean.Unidad;
 import com.udep.siga.service.AmbienteService;
 
@@ -20,6 +21,7 @@ public class AmbienteController {
 
 	private static final Object TITULO_VIEW_AMBIENTES = "Ambientes Disponibles";
 	private static final String LABEL_DATA = "data";
+	private static final String LABEL_SUCCESS = "success";
 	@Autowired
 	private AmbienteService ambienteService;
 
@@ -52,6 +54,19 @@ public class AmbienteController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			data.put(LABEL_DATA, null);
+		}
+		return data;
+	}
+	
+	@RequestMapping(value = "/horario.json", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> listarHorario(Integer idAmbiente) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		try {
+			data.putAll(ambienteService.eventosPorAmbiente(idAmbiente));
+			data.put(LABEL_SUCCESS, Boolean.TRUE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			data.put(LABEL_SUCCESS, Boolean.FALSE);
 		}
 		return data;
 	}

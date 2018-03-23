@@ -2731,7 +2731,7 @@ public class UtilRowMapper {
             ambiente.setTipoAmbiente(tipoAmbiente);
             Unidad unidad=new Unidad();
             unidad.setIdUnidad(rs.getInt("IDUNIDAD"));
-            unidad.setNombre("UNIDAD");
+            unidad.setNombre(rs.getString("UNIDAD"));
             ambiente.setUnidad(unidad);
             ambiente.setNombre(rs.getString("NOMBRE"));
             ambiente.setReservable(rs.getString("RESERVABLE").charAt(0));
@@ -2753,6 +2753,25 @@ public class UtilRowMapper {
             unidad.setNombre(rs.getString("NOMBRE"));
             unidad.setIdUnidad(rs.getInt("IDUNIDAD"));
           return unidad;
+        }
+    }
+    
+    public static RowMapper getEventosPorAmbienteAllMapper(){
+        return new EventosPorAmbienteAllMapper();
+    }
+    
+    private static final class EventosPorAmbienteAllMapper implements RowMapper {
+
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+            FechaEvento fechaEvento = new FechaEvento();
+            fechaEvento.setId(rs.getInt("IDFECHAEVENTO"));
+            fechaEvento.setIdEvento(rs.getInt("IDEVENTO"));
+            fechaEvento.setFechaHoraInicio(rs.getTimestamp("FECHAHORAINICIO"));
+            fechaEvento.setFechaHoraFin(rs.getTimestamp("FECHAHORAFIN"));
+            fechaEvento.setIdAmbiente(rs.getInt("IDAMBIENTE"));
+            fechaEvento.setHoraInicio(rs.getInt("HORA_INICIO"));
+            fechaEvento.setHoraFin(rs.getInt("HORA_FIN"));
+          return fechaEvento;
         }
     }
 }

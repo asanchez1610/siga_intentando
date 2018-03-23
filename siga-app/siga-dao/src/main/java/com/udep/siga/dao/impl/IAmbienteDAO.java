@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import com.udep.siga.bean.Ambiente;
+import com.udep.siga.bean.FechaEvento;
 import com.udep.siga.bean.Unidad;
 import com.udep.siga.dao.AmbienteDAO;
 import com.udep.siga.dao.util.CustomizeJdbcDaoSupport;
@@ -50,6 +51,22 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 		params.addValue("idCampus", idCampus);
 
 		List<Unidad> list = this.getNamedParameterJdbcTemplate().query(sql, params, UtilRowMapper.getUnidadAllMapper());
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			return list;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FechaEvento> eventosPorAmbiente(int idAmbiente, String fecha) {
+		String sql = "SELECT DATEPART(HOUR, FECHAHORAINICIO) as HORA_INICIO,DATEPART(HOUR, FECHAHORAFIN) as HORA_FIN,S2_FECHASEVENTO.* FROM S2_FECHASEVENTO WHERE IDAMBIENTE = :idAmbiente  AND CAST(FECHAHORAINICIO as DATE) = :fecha";
+		System.out.println(sql);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("idAmbiente", idAmbiente);
+		params.addValue("fecha", fecha);
+		List<FechaEvento> list = this.getNamedParameterJdbcTemplate().query(sql, params, UtilRowMapper.getEventosPorAmbienteAllMapper());
 		if (list.isEmpty()) {
 			return null;
 		} else {
