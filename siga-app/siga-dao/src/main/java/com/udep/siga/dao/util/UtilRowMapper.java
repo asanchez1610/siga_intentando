@@ -2731,7 +2731,7 @@ public class UtilRowMapper {
             ambiente.setTipoAmbiente(tipoAmbiente);
             Unidad unidad=new Unidad();
             unidad.setIdUnidad(rs.getInt("IDUNIDAD"));
-            unidad.setNombre("UNIDAD");
+            unidad.setNombre(rs.getString("UNIDAD"));
             ambiente.setUnidad(unidad);
             ambiente.setNombre(rs.getString("NOMBRE"));
             ambiente.setReservable(rs.getString("RESERVABLE").charAt(0));
