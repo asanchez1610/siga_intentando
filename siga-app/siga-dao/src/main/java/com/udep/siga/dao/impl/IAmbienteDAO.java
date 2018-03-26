@@ -65,7 +65,13 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FechaEvento> eventosPorAmbiente(int idAmbiente, String fecha) {
-		String sql = "SELECT DATEPART(HOUR, FECHAHORAINICIO) as HORA_INICIO,DATEPART(HOUR, FECHAHORAFIN) as HORA_FIN,S2_FECHASEVENTO.* FROM S2_FECHASEVENTO WHERE IDAMBIENTE = :idAmbiente  AND CAST(FECHAHORAINICIO as DATE) = :fecha";
+		String sql = "SELECT DATEPART(HOUR, FECHAHORAINICIO) as HORA_INICIO,DATEPART(HOUR, FECHAHORAFIN) as HORA_FIN,S2_FECHASEVENTO.* "
+				+ "			FROM S2_FECHASEVENTO "
+				+ "			INNER JOIN S2_ESTADOSFECHAEVENTO ON	S2_ESTADOSFECHAEVENTO.IDFECHAEVENTO = S2_FECHASEVENTO.IDFECHAEVENTO "
+				+ "			WHERE "
+				+ "				IDAMBIENTE = :idAmbiente  "
+				+ "				AND CAST(FECHAHORAINICIO as DATE) = :fecha "
+				+ "				AND S2_ESTADOSFECHAEVENTO.idestado = 1 ";
 		System.out.println(sql);
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("idAmbiente", idAmbiente);
