@@ -113,7 +113,7 @@ public class AmbienteService {
 		SimpleDateFormat sdfDisplay = new SimpleDateFormat("hh:mm aa");
 		int diferenciaEventos = 0;
 		if (noDisponibles != null) {
-			Date fIniTemp = null , fFinTemp = null;
+			Date fIniTemp = null;
 			for (FechaEvento fechaEvento : noDisponibles) {
 				diferenciaEventos = fechaEvento.getFechaHoraFin().getHours()-fechaEvento.getFechaHoraInicio().getHours();
 				if(diferenciaEventos > 1) {
@@ -150,7 +150,7 @@ public class AmbienteService {
 			}
 		}
 		List<String> horariosDisponibles = new ArrayList<String>();
-		cal.add(Calendar.HOUR, 1 + (postMeridiano ? 12 : 0));
+		cal.add(Calendar.HOUR, (postMeridiano ? 12 : 0));
 		if (hora_actual >= HORA_INICIO && hora_actual < HORA_FIN) {
 			String line = "";
 			for (int i = 0; i < iteracciones; i++) {
