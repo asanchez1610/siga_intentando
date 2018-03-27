@@ -65,13 +65,28 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FechaEvento> eventosPorAmbiente(int idAmbiente, String fecha) {
-		String sql = "SELECT DATEPART(HOUR, FECHAHORAINICIO) as HORA_INICIO,DATEPART(HOUR, FECHAHORAFIN) as HORA_FIN,S2_FECHASEVENTO.* "
-				+ "			FROM S2_FECHASEVENTO "
-				+ "			INNER JOIN S2_ESTADOSFECHAEVENTO ON	S2_ESTADOSFECHAEVENTO.IDFECHAEVENTO = S2_FECHASEVENTO.IDFECHAEVENTO "
-				+ "			WHERE "
-				+ "				IDAMBIENTE = :idAmbiente  "
-				+ "				AND CAST(FECHAHORAINICIO as DATE) = :fecha "
-				+ "				AND S2_ESTADOSFECHAEVENTO.idestado = 1 ";
+		
+		String sql = "SELECT\r\n" + 
+						"	DATEPART(\r\n" + 
+						"		HOUR,\r\n" + 
+						"		fe.FECHAHORAINICIO\r\n" + 
+						"	) as HORA_INICIO,\r\n" + 
+						"	DATEPART(\r\n" + 
+						"		HOUR,\r\n" + 
+						"		fe.FECHAHORAFIN\r\n" + 
+						"	) as HORA_FIN,\r\n" + 
+						"	fe.*\r\n" + 
+					"FROM\r\n" + 
+					"	S2_FECHASEVENTO fe\r\n" + 
+					"INNER JOIN S2_ESTADOSFECHAEVENTO efe on	efe.IDFECHAEVENTO = fe.IDFECHAEVENTO\r\n" + 
+					"WHERE\r\n" + 
+					"	fe.IDAMBIENTE = :idAmbiente\r\n" + 
+					"	AND CAST(\r\n" + 
+					"		fe.FECHAHORAINICIO as DATE\r\n" + 
+					"	)= :fecha\r\n" + 
+					"	AND efe.IDESTADO = 1\r\n" + 
+					"	AND efe.IDESTADOFECHAEVENTO = (SELECT MAX(S2_ESTADOSFECHAEVENTO.IDESTADOFECHAEVENTO) FROM S2_ESTADOSFECHAEVENTO WHERE IDFECHAEVENTO = fe.IDFECHAEVENTO)";
+		
 		System.out.println(sql);
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("idAmbiente", idAmbiente);
