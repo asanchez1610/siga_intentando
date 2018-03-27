@@ -48,7 +48,7 @@ var Ambientes = {
     			$('.horario').hide();
     			var b = $(this);
     			var arr = [];
-    			if(b.val().length > 2 ){
+    			if(b.val().length > 0 ){
     				$('.item-ambiente').each(function(){
     				var item = $(this);
     					if(item.html().toLowerCase().indexOf(b.val().toLowerCase()) >= 0){

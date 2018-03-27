@@ -23,7 +23,7 @@ import com.udep.siga.util.BDConstants;
 public class AmbienteService {
 
 	public static final int HORA_INICIO = 7;
-	public static final int HORA_FIN = 21;
+	public static final int HORA_FIN = 22;
 
 	@Autowired
 	private UsuarioService usuarioService;
