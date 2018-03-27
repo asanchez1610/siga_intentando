@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,10 +111,42 @@ public class AmbienteService {
 
 		List<String> excluidos = new ArrayList<String>();
 		SimpleDateFormat sdfDisplay = new SimpleDateFormat("hh:mm aa");
+		int diferenciaEventos = 0;
 		if (noDisponibles != null) {
+			Date fIniTemp = null , fFinTemp = null;
 			for (FechaEvento fechaEvento : noDisponibles) {
-				excluidos.add(sdfDisplay.format(fechaEvento.getFechaHoraInicio()) + " - "
-						+ sdfDisplay.format(fechaEvento.getFechaHoraFin()));
+				diferenciaEventos = fechaEvento.getFechaHoraFin().getHours()-fechaEvento.getFechaHoraInicio().getHours();
+				if(diferenciaEventos > 1) {
+					
+					for(int j = 0 ; j < diferenciaEventos ; j++) {
+						
+						if(fechaEvento.getFechaHoraInicio().getMinutes() > 0) {
+							fechaEvento.setFechaHoraInicio(DateUtils.addMinutes(fechaEvento.getFechaHoraInicio(), -fechaEvento.getFechaHoraInicio().getMinutes()));
+						}
+						
+						excluidos.add(sdfDisplay.format(fechaEvento.getFechaHoraInicio()) + " - "+ sdfDisplay.format(DateUtils.addHours(fechaEvento.getFechaHoraInicio(), 1)));
+						fIniTemp = DateUtils.addHours(fechaEvento.getFechaHoraInicio(), 1);
+						fechaEvento.setFechaHoraInicio(fIniTemp);
+						
+					}
+					
+				}else {
+					
+					boolean ajusteMinutos = false;
+					if(fechaEvento.getFechaHoraInicio().getMinutes() > 0) {
+						fechaEvento.setFechaHoraInicio(DateUtils.addMinutes(fechaEvento.getFechaHoraInicio(), -fechaEvento.getFechaHoraInicio().getMinutes()));
+						fechaEvento.setFechaHoraFin(DateUtils.addMinutes(fechaEvento.getFechaHoraFin(), -fechaEvento.getFechaHoraFin().getMinutes()));
+						ajusteMinutos = true;
+					}
+					
+					excluidos.add(sdfDisplay.format(fechaEvento.getFechaHoraInicio()) + " - "+ sdfDisplay.format(fechaEvento.getFechaHoraFin()));
+					
+					if(ajusteMinutos) {
+						excluidos.add(sdfDisplay.format(DateUtils.addHours(fechaEvento.getFechaHoraInicio(), 1)) + " - "+ sdfDisplay.format(DateUtils.addHours(fechaEvento.getFechaHoraFin(), 1)));
+					}
+					
+				}
+				
 			}
 		}
 		List<String> horariosDisponibles = new ArrayList<String>();
@@ -146,19 +179,6 @@ public class AmbienteService {
 			}
 		}
 		return excluir;
-	}
-
-	private boolean ocupado(int horaTemp, List<FechaEvento> noDisponibles) {
-		boolean ocupado = false;
-		if (noDisponibles != null) {
-			for (FechaEvento fechaEvento : noDisponibles) {
-				if (horaTemp >= fechaEvento.getHoraInicio() && horaTemp <= fechaEvento.getHoraFin()) {
-					ocupado = true;
-					break;
-				}
-			}
-		}
-		return ocupado;
 	}
 
 }

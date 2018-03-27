@@ -424,8 +424,10 @@ var app = $.sammy('#main-app', function() {
         /*=============== Routes ===============*/
        
         this.get( '#/', function(context) {                    
+
             //this.redirect( '#/avisos' );
         	this.redirect( '#/ambientes' );
+
         });
         
        

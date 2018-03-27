@@ -45,6 +45,7 @@ var Ambientes = {
 
         	//Busqueda de ambientes
     		$('#txtBusqueda').keyup(function(){
+    			$('.horario').hide();
     			var b = $(this);
     			var arr = [];
     			if(b.val().length > 2 ){
