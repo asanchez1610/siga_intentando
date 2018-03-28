@@ -24,6 +24,7 @@ public class AmbienteService {
 
 	public static final int HORA_INICIO = 7;
 	public static final int HORA_FIN = 22;
+	private static final int MAXIMO_TERACCIONES = 3;
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -159,6 +160,9 @@ public class AmbienteService {
 				line += sdfDisplay.format(cal.getTime());
 				if (!excluirRangoHora(line, excluidos)) {
 					horariosDisponibles.add(line);
+				}
+				if(MAXIMO_TERACCIONES == horariosDisponibles.size()) {
+					break;
 				}
 			}
 		}
