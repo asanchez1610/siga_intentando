@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import com.udep.siga.bean.Alumno;
 import com.udep.siga.bean.Ambiente;
 import com.udep.siga.bean.FechaEvento;
+import com.udep.siga.bean.Piso;
+import com.udep.siga.bean.SedeInfraestructura;
+import com.udep.siga.bean.TipoAmbiente;
 import com.udep.siga.bean.Unidad;
 import com.udep.siga.dao.AmbienteDAO;
 import com.udep.siga.util.BDConstants;
@@ -23,7 +26,7 @@ import com.udep.siga.util.BDConstants;
 public class AmbienteService {
 
 	public static final int HORA_INICIO = 7;
-	public static final int HORA_FIN = 21;
+	public static final int HORA_FIN = 22;
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -33,7 +36,6 @@ public class AmbienteService {
 
 	public List<Ambiente> getAmbientes(Integer idUnidad) {
 
-		Date hoy = new Date();
 		Alumno alumno = usuarioService.getInfoUsuario();
 		int unidad = 0;
 		if (idUnidad != null) {
@@ -42,35 +44,89 @@ public class AmbienteService {
 
 		Date fechaHoy = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
+		Calendar cal = null;
 
-		// Desplegamos la fecha
-		Date tempDate = cal.getTime();
-		System.out.println("Fecha actual: " + tempDate);
 
-		// Le cambiamos la hora y minutos
-		cal.set(Calendar.HOUR_OF_DAY, BDConstants.FECHA_HORA_LIMITE_MAXIMO);
-		cal.set(Calendar.MINUTE, BDConstants.FECHA_MINUTO_CERO);
-		cal.set(Calendar.SECOND, BDConstants.FECHA_MINUTO_CERO);
-		tempDate = cal.getTime();
-
-		String fechaMaxima = sdf.format(tempDate);
-
-		// Le cambiamos la hora y minutos
-
-		cal.set(Calendar.HOUR_OF_DAY, BDConstants.FECHA_HORA_LIMITE_MINIMO);
-		cal.set(Calendar.MINUTE, BDConstants.FECHA_MINUTO_CERO);
-		cal.set(Calendar.SECOND, BDConstants.FECHA_MINUTO_CERO);
-		tempDate = cal.getTime();
-
-		String fechaMinima = sdf.format(tempDate);
-
-		List<Ambiente> list = ambienteDAO.getAmbientes(sdf.format(fechaHoy), fechaMaxima, fechaMinima, unidad,
+		List<Ambiente> list = ambienteDAO.getAmbientes(   unidad,
 				alumno.getAlumnoEstudioList().get(0).getPeriodoAcademicoVigente().getId(),
 				alumno.getAlumnoEstudioList().get(0).getCampus().getId());
+		
+		List<Ambiente> listFinal=new ArrayList<Ambiente>() ;
+		Ambiente ambiente=null;
+		for (int i = 0; i < list.size(); i++) {
+			
+			String fecha = sdf.format(fechaHoy);
 
-		return list;
+			cal = Calendar.getInstance();
+			cal.setTime(new Date());
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+
+			int hora_actual = cal.get(Calendar.HOUR_OF_DAY);
+
+			cal.set(Calendar.HOUR, hora_actual);
+			int iteracciones = HORA_FIN - hora_actual;
+
+			boolean postMeridiano = false;
+			if (hora_actual >= 12) {
+				postMeridiano = true;
+			} else {
+				postMeridiano = false;
+			}
+			
+			
+			if (hora_actual >= HORA_INICIO && hora_actual < HORA_FIN) {
+			
+			SimpleDateFormat sdfDisplay = new SimpleDateFormat("hh:mm aa");
+			
+			List<String> excluidos=listHorarioExcluidos(list.get(i).getIdAmbiente(), fecha,sdfDisplay);
+			boolean existHorario=false;
+			
+			cal.add(Calendar.HOUR, (postMeridiano ? 12 : 0));
+			
+				String line = "";
+				for (int j = 0; j < iteracciones; j++) {
+					line = sdfDisplay.format(cal.getTime()) + " - ";
+					cal.add(Calendar.HOUR, 1);
+					line += sdfDisplay.format(cal.getTime());
+					if (!excluirRangoHora(line, excluidos)) {
+						existHorario=true;
+						break;
+					}
+				}
+				
+				if(existHorario) {
+
+				    ambiente = new Ambiente();
+		            ambiente.setAforo(list.get(i).getAforo());
+		            ambiente.setAreaM2(list.get(i).getAreaM2());
+		            ambiente.setCapacidadReal(list.get(i).getCapacidadReal());
+		            ambiente.setDescripcion(list.get(i).getDescripcion());
+		            ambiente.setIdAmbiente(list.get(i).getIdAmbiente());
+		            Piso piso=new Piso();
+		            piso.setIdPiso(list.get(i).getPiso().getIdPiso());
+		            ambiente.setPiso(piso);
+		            SedeInfraestructura sedeInfraestructura=new SedeInfraestructura();
+		            sedeInfraestructura.setIdSedeInfraestructura(list.get(i).getSedeInfraestructura().getIdSedeInfraestructura());
+		            ambiente.setSedeInfraestructura(sedeInfraestructura);
+		            TipoAmbiente tipoAmbiente=new TipoAmbiente();
+		            tipoAmbiente.setIdTipoAmbiente(list.get(i).getTipoAmbiente().getIdTipoAmbiente());
+		            ambiente.setTipoAmbiente(tipoAmbiente);
+		            Unidad unida=new Unidad();
+		            unida.setIdUnidad(list.get(i).getUnidad().getIdUnidad());
+		            unida.setNombre(list.get(i).getUnidad().getNombre());
+		            ambiente.setUnidad(unida);
+		            ambiente.setNombre(list.get(i).getNombre());
+		            ambiente.setReservable(list.get(i).getReservable());
+		            listFinal.add(ambiente);
+					
+				}
+				
+			}
+			
+		}
+
+		return listFinal;
 	}
 
 	public List<Unidad> getUnidadSede() {
@@ -90,8 +146,6 @@ public class AmbienteService {
 		result.put("horaActual", sdfHoraActual.format(now));
 
 		String fecha = sdf.format(now);
-		List<FechaEvento> noDisponibles = ambienteDAO.eventosPorAmbiente(idAmbiente, fecha);
-
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.set(Calendar.MINUTE, 0);
@@ -108,12 +162,56 @@ public class AmbienteService {
 		} else {
 			postMeridiano = false;
 		}
-
-		List<String> excluidos = new ArrayList<String>();
 		SimpleDateFormat sdfDisplay = new SimpleDateFormat("hh:mm aa");
+		
+		List<String> excluidos=listHorarioExcluidos(idAmbiente, fecha,sdfDisplay);
+		
+
+		
+		List<String> horariosDisponibles = new ArrayList<String>();
+		cal.add(Calendar.HOUR, (postMeridiano ? 12 : 0));
+		if (hora_actual >= HORA_INICIO && hora_actual < HORA_FIN) {
+			String line = "";
+			for (int i = 0; i < iteracciones; i++) {
+				line = sdfDisplay.format(cal.getTime()) + " - ";
+				cal.add(Calendar.HOUR, 1);
+				line += sdfDisplay.format(cal.getTime());
+				if (!excluirRangoHora(line, excluidos)) {
+					horariosDisponibles.add(line);
+				}
+			}
+		}
+
+		result.put("listaDisponibilidad", horariosDisponibles);
+		return result;
+	}
+
+	private boolean excluirRangoHora(String line, List<String> excluidos) {
+		boolean excluir = false;
+		if (excluidos != null) {
+			for (String item : excluidos) {
+				if (line.equals(item)) {
+					excluir = true;
+					break;
+				}
+
+			}
+		}
+		return excluir;
+	}
+	
+	
+	private List<String> listHorarioExcluidos(int idAmbiente, String fecha, SimpleDateFormat sdfDisplay){
+		
+		List<FechaEvento> noDisponibles = ambienteDAO.eventosPorAmbiente(idAmbiente, fecha);
+
+		
+		
+		List<String> excluidos = new ArrayList<String>();
+		
 		int diferenciaEventos = 0;
 		if (noDisponibles != null) {
-			Date fIniTemp = null , fFinTemp = null;
+			Date fIniTemp = null;
 			for (FechaEvento fechaEvento : noDisponibles) {
 				diferenciaEventos = fechaEvento.getFechaHoraFin().getHours()-fechaEvento.getFechaHoraInicio().getHours();
 				if(diferenciaEventos > 1) {
@@ -149,36 +247,7 @@ public class AmbienteService {
 				
 			}
 		}
-		List<String> horariosDisponibles = new ArrayList<String>();
-		cal.add(Calendar.HOUR, 1 + (postMeridiano ? 12 : 0));
-		if (hora_actual >= HORA_INICIO && hora_actual < HORA_FIN) {
-			String line = "";
-			for (int i = 0; i < iteracciones; i++) {
-				line = sdfDisplay.format(cal.getTime()) + " - ";
-				cal.add(Calendar.HOUR, 1);
-				line += sdfDisplay.format(cal.getTime());
-				if (!excluirRangoHora(line, excluidos)) {
-					horariosDisponibles.add(line);
-				}
-			}
-		}
-
-		result.put("listaDisponibilidad", horariosDisponibles);
-		return result;
-	}
-
-	private boolean excluirRangoHora(String line, List<String> excluidos) {
-		boolean excluir = false;
-		if (excluidos != null) {
-			for (String item : excluidos) {
-				if (line.equals(item)) {
-					excluir = true;
-					break;
-				}
-
-			}
-		}
-		return excluir;
-	}
+		return excluidos;
+	};
 
 }

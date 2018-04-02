@@ -22,7 +22,7 @@ import com.udep.siga.util.BDConstants;
 public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<Ambiente> getAmbientes(String fechaHoy, String fechaMaxima, String fechaMinima,int idUnidad,  int idPeriodoAcademico, int idCampus) {
+	public List<Ambiente> getAmbientes(int idUnidad,  int idPeriodoAcademico, int idCampus) {
 		// TODO Auto-generated method stub
 		
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(this.getJdbcTemplate())
@@ -30,15 +30,10 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 				.returningResultSet("resulset", UtilRowMapper.getAmbienteMapper());
 
 		
-		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("IDUNIDAD", idUnidad, Types.INTEGER);
-		params.addValue("RANGOHORARIO",fechaHoy , Types.TIMESTAMP);
 		params.addValue("IDPERIODOACADEMICO", idPeriodoAcademico, Types.INTEGER);
 		params.addValue("IDCAMPUS", idCampus, Types.INTEGER);
-		params.addValue("LIMITEMAXIMO", fechaMaxima, Types.TIMESTAMP);
-		params.addValue("LIMITEMINIMO",fechaMinima , Types.TIMESTAMP);
-		System.out.println("valores :"+ fechaHoy+","+fechaMaxima+","+fechaMinima+","+ + idUnidad + "," + idPeriodoAcademico + "," + idCampus);
 		List<Ambiente> resulset = (List<Ambiente>) simpleJdbcCall.execute(params).get("resulset");
 
 		if (resulset.isEmpty())
@@ -65,8 +60,29 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FechaEvento> eventosPorAmbiente(int idAmbiente, String fecha) {
-		String sql = "SELECT DATEPART(HOUR, FECHAHORAINICIO) as HORA_INICIO,DATEPART(HOUR, FECHAHORAFIN) as HORA_FIN,S2_FECHASEVENTO.* FROM S2_FECHASEVENTO WHERE IDAMBIENTE = :idAmbiente  AND CAST(FECHAHORAINICIO as DATE) = :fecha";
-		System.out.println(sql);
+		
+		String sql = "SELECT\r\n" + 
+						"	DATEPART(\r\n" + 
+						"		HOUR,\r\n" + 
+						"		fe.FECHAHORAINICIO\r\n" + 
+						"	) as HORA_INICIO,\r\n" + 
+						"	DATEPART(\r\n" + 
+						"		HOUR,\r\n" + 
+						"		fe.FECHAHORAFIN\r\n" + 
+						"	) as HORA_FIN,\r\n" + 
+						"	fe.*\r\n" + 
+					"FROM\r\n" + 
+					"	S2_FECHASEVENTO fe\r\n" + 
+					"INNER JOIN S2_ESTADOSFECHAEVENTO efe on	efe.IDFECHAEVENTO = fe.IDFECHAEVENTO\r\n" + 
+					"WHERE\r\n" + 
+					"	fe.IDAMBIENTE = :idAmbiente\r\n" + 
+					"	AND CAST(\r\n" + 
+					"		fe.FECHAHORAINICIO as DATE\r\n" + 
+					"	)= :fecha\r\n" + 
+					"	AND efe.IDESTADO = 1\r\n" + 
+					"	AND efe.IDESTADOFECHAEVENTO = (SELECT MAX(S2_ESTADOSFECHAEVENTO.IDESTADOFECHAEVENTO) FROM S2_ESTADOSFECHAEVENTO WHERE IDFECHAEVENTO = fe.IDFECHAEVENTO)";
+		
+		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("idAmbiente", idAmbiente);
 		params.addValue("fecha", fecha);
