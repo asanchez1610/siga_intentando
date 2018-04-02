@@ -22,7 +22,7 @@ import com.udep.siga.util.BDConstants;
 public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<Ambiente> getAmbientes(String fechaHoy, String fechaMaxima, String fechaMinima,int idUnidad,  int idPeriodoAcademico, int idCampus) {
+	public List<Ambiente> getAmbientes(int idUnidad,  int idPeriodoAcademico, int idCampus) {
 		// TODO Auto-generated method stub
 		
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(this.getJdbcTemplate())
@@ -30,15 +30,10 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 				.returningResultSet("resulset", UtilRowMapper.getAmbienteMapper());
 
 		
-		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("IDUNIDAD", idUnidad, Types.INTEGER);
-		params.addValue("RANGOHORARIO",fechaHoy , Types.TIMESTAMP);
 		params.addValue("IDPERIODOACADEMICO", idPeriodoAcademico, Types.INTEGER);
 		params.addValue("IDCAMPUS", idCampus, Types.INTEGER);
-		params.addValue("LIMITEMAXIMO", fechaMaxima, Types.TIMESTAMP);
-		params.addValue("LIMITEMINIMO",fechaMinima , Types.TIMESTAMP);
-		System.out.println("valores :"+ fechaHoy+","+fechaMaxima+","+fechaMinima+","+ + idUnidad + "," + idPeriodoAcademico + "," + idCampus);
 		List<Ambiente> resulset = (List<Ambiente>) simpleJdbcCall.execute(params).get("resulset");
 
 		if (resulset.isEmpty())
@@ -87,7 +82,8 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 					"	AND efe.IDESTADO = 1\r\n" + 
 					"	AND efe.IDESTADOFECHAEVENTO = (SELECT MAX(S2_ESTADOSFECHAEVENTO.IDESTADOFECHAEVENTO) FROM S2_ESTADOSFECHAEVENTO WHERE IDFECHAEVENTO = fe.IDFECHAEVENTO)";
 		
-		System.out.println(sql);
+		
+
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("idAmbiente", idAmbiente);
 		params.addValue("fecha", fecha);
