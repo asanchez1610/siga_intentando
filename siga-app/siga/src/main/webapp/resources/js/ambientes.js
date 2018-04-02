@@ -48,6 +48,7 @@ var Ambientes = {
     			$('.horario').hide();
     			var b = $(this);
     			var arr = [];
+
     			if(b.val().length > 1 ){
     				$('.item-ambiente').each(function(){
     				var item = $(this);

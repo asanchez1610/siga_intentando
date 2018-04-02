@@ -37,7 +37,7 @@
 }
 
 .input-search {
-	width: 96%;
+	width: 96.5%;
 	border: 1px #e1e1e1 solid;
 }
 
@@ -124,6 +124,9 @@
 	.comtent-items-ambiente {
 		height: 380px;
 	}
+	.input-search {
+		width: 96.5%;
+	}
 }
 
 @media only screen and (max-width: 870px) {
@@ -138,6 +141,11 @@
 		height: 160px;
 		
 	}
+	.input-search {
+		width: 97.5%;
+	}
 }
+
+
 
 /** END - Estilos para ambientes **/

@@ -83,6 +83,7 @@ public class IAmbienteDAO extends CustomizeJdbcDaoSupport implements AmbienteDAO
 					"	AND efe.IDESTADOFECHAEVENTO = (SELECT MAX(S2_ESTADOSFECHAEVENTO.IDESTADOFECHAEVENTO) FROM S2_ESTADOSFECHAEVENTO WHERE IDFECHAEVENTO = fe.IDFECHAEVENTO)";
 		
 		
+
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("idAmbiente", idAmbiente);
 		params.addValue("fecha", fecha);
