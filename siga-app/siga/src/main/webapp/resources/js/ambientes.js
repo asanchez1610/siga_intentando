@@ -7,7 +7,7 @@ var Ambientes = {
 
 		},
 		
-		mostrarHorariosDiponibles:function(idAmbiente){
+		mostrarHorariosDiponibles:function(idAmbiente, descripcionInicialUnidad){
 			console.log('ambiente seleccionado='+idAmbiente);
 			$('.horario').html('<div class ="loading-ambiente"><img src = "resources/img/loading.gif" /></div>');
 			$.ajax({
@@ -18,7 +18,7 @@ var Ambientes = {
 			}).done(function(response) {
 				console.log(response);
 				$('.horario').empty();
-				$('.horario').append('<h2>Hora: '+response.horaActual+'</h2>');
+				$('.horario').append('<h2> '+descripcionInicialUnidad+' / Hora: '+response.horaActual+' </h2>');
 				$('.horario').append('<h3>Disponibilidad</h3>');
 				if(response.listaDisponibilidad){
 					response.listaDisponibilidad.forEach(function(item){
@@ -40,7 +40,7 @@ var Ambientes = {
     			var selected = $(this);
     			$('.item-ambiente').removeClass('item-ambiente-selected');
     			selected.addClass('item-ambiente-selected');
-    			me.mostrarHorariosDiponibles(selected.data('idambiente'));
+    			me.mostrarHorariosDiponibles(selected.data('idambiente'), selected.data('descinfranombre'));
     		});
 
         	//Busqueda de ambientes
@@ -59,13 +59,13 @@ var Ambientes = {
     						item.hide();
     					}
     				});
-    				$('.header-item-ambiente').hide();
+    				//$('.header-item-ambiente').hide();
     				arr.forEach(function(headerId){
     					$(headerId).show();
     				});
     			}else{
     				$('.item-ambiente').show();
-    				$('.header-item-ambiente').show();
+    				//$('.header-item-ambiente').show();
     			}
     		});
 			
@@ -165,26 +165,36 @@ var Ambientes = {
 					
 					$('.comtent-items-ambiente').empty();
 					var arrTemp = null;
+					var valorInicialAmbiente=0;
+					var descripcionInicialUnidad='';
 					Object.keys(mapData).forEach(function(key) {
-
+						
 						arrTemp = mapData[key];
 						if(arrTemp){
-							if($('#tipoUnidad').val() == '0'){
-								$('.comtent-items-ambiente').append('<div class="header-item-ambiente" id="'+'padre-'+key+'">'+mapData[key][0].unidad.nombre+'</div>');	
-							}
+
 							arrTemp.forEach(function(item){
-								$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-infraestructura="'+'padre-'+key+'">'+
-																		''+item.nombre+
-																		(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
-																	 '</div>');
+								valorInicialAmbiente++;
+								if(valorInicialAmbiente==1){
+									valorInicialAmbiente=item.idAmbiente;
+									descripcionInicialUnidad=arrTemp[0].unidad.nombre;
+									
+									$('.comtent-items-ambiente').append('<div class="item-ambiente item-ambiente-selected" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="'+mapData[key][0].unidad.nombre+'" data-infraestructura="'+'padre-'+key+'">'+
+											''+item.nombre+
+											(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
+										 '</div>');
+								}else{
+									$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="'+mapData[key][0].unidad.nombre+'" data-infraestructura="'+'padre-'+key+'">'+
+											''+item.nombre+
+											(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
+										 '</div>');
+								}
+						
 							});
 						}
-						
-
 					});
 					
 					me.agregarEventos();
-					
+					me.mostrarHorariosDiponibles(valorInicialAmbiente, descripcionInicialUnidad);
 				}else{
 					$('.comtent-items-ambiente').html('No hay Ambientes disponibles en este momento.');
 				}
