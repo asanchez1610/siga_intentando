@@ -1,7 +1,9 @@
 package com.udep.siga.service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -131,11 +133,16 @@ public class AmbienteService {
 				}
 			}
 		}
-
-		Collections.sort(listFinal, new Comparator<Ambiente>() {
+		
+		listFinal.sort(new Comparator<Ambiente>() {
 			public int compare(Ambiente p1, Ambiente p2) {
 				// Aqui esta el truco, ahora comparamos p2 con p1 y no al reves como antes
-				return new Integer(p2.getCantidadHorario()).compareTo(new Integer(p1.getCantidadHorario()));
+				System.out.println(p2.getNombre() +" -- "+p1.getNombre());
+				System.out.println(p2.getCantidadHorario()+" -- "+p1.getCantidadHorario());
+//				return p2.getCantidadHorario() > p1.getCantidadHorario() ? 1 : p2.getCantidadHorario() < p1.getCantidadHorario() ? -1 : 0;
+				BigDecimal v1 = new BigDecimal(p1.getCantidadHorario());
+				BigDecimal v2 = new BigDecimal(p2.getCantidadHorario());
+				return v2.compareTo(v1);
 			}
 		});
 		
