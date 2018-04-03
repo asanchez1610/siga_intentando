@@ -20,14 +20,14 @@ import com.udep.siga.bean.SedeInfraestructura;
 import com.udep.siga.bean.TipoAmbiente;
 import com.udep.siga.bean.Unidad;
 import com.udep.siga.dao.AmbienteDAO;
-import com.udep.siga.util.BDConstants;
 
 @Service("ambienteService")
 public class AmbienteService {
 
 	public static final int HORA_INICIO = 7;
 	public static final int HORA_FIN = 22;
-	private static final int MAXIMO_TERACCIONES = 3;
+	private int MAXIMO_ITERACCIONES_DISPONIBLES = 3;
+	private int MAXIMO_ITERACCIONES_AMBIENTES = 3;
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -90,11 +90,11 @@ public class AmbienteService {
 					line = sdfDisplay.format(cal.getTime()) + " - ";
 					cal.add(Calendar.HOUR, 1);
 					line += sdfDisplay.format(cal.getTime());
-					if (!excluirRangoHora(line, excluidos)) {
+					if (!excluirRangoHora(line, excluidos) && (cal.getTime().getHours() - hora_actual) <= MAXIMO_ITERACCIONES_AMBIENTES) {
 						existHorario=true;
 						contadorHorarios++;
 					}
-					if(MAXIMO_TERACCIONES == contadorHorarios) {
+					if(MAXIMO_ITERACCIONES_AMBIENTES == contadorHorarios) {
 						break;
 					}
 				}
@@ -174,16 +174,18 @@ public class AmbienteService {
 		
 		List<String> horariosDisponibles = new ArrayList<String>();
 		cal.add(Calendar.HOUR, (postMeridiano ? 12 : 0));
+		Integer maxInteracionesTemp = MAXIMO_ITERACCIONES_DISPONIBLES;
 		if (hora_actual >= HORA_INICIO && hora_actual < HORA_FIN) {
 			String line = "";
 			for (int i = 0; i < iteracciones; i++) {
 				line = sdfDisplay.format(cal.getTime()) + " - ";
 				cal.add(Calendar.HOUR, 1);
 				line += sdfDisplay.format(cal.getTime());
-				if (!excluirRangoHora(line, excluidos)) {
+				if (!excluirRangoHora(line, excluidos) && (cal.getTime().getHours() - hora_actual) <= MAXIMO_ITERACCIONES_DISPONIBLES) {
 					horariosDisponibles.add(line);
 				}
-				if(MAXIMO_TERACCIONES == horariosDisponibles.size()) {
+				
+				if(maxInteracionesTemp == horariosDisponibles.size()) {
 					break;
 				}
 			}
