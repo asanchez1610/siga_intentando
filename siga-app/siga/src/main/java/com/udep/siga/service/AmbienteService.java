@@ -90,7 +90,7 @@ public class AmbienteService {
 					line = sdfDisplay.format(cal.getTime()) + " - ";
 					cal.add(Calendar.HOUR, 1);
 					line += sdfDisplay.format(cal.getTime());
-					if (!excluirRangoHora(line, excluidos)) {
+					if (!excluirRangoHora(line, excluidos) && (cal.getTime().getHours() - hora_actual) <3) {
 						existHorario=true;
 						contadorHorarios++;
 					}
@@ -180,7 +180,7 @@ public class AmbienteService {
 				line = sdfDisplay.format(cal.getTime()) + " - ";
 				cal.add(Calendar.HOUR, 1);
 				line += sdfDisplay.format(cal.getTime());
-				if (!excluirRangoHora(line, excluidos)) {
+				if (!excluirRangoHora(line, excluidos) && (cal.getTime().getHours() - hora_actual) <3) {
 					horariosDisponibles.add(line);
 				}
 				if(MAXIMO_TERACCIONES == horariosDisponibles.size()) {
