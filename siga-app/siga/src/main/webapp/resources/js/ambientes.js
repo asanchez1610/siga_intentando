@@ -53,19 +53,13 @@ var Ambientes = {
     				$('.item-ambiente').each(function(){
     				var item = $(this);
     					if(item.html().toLowerCase().indexOf(b.val().toLowerCase()) >= 0){
-//    							arr.push('#'+item.data('infraestructura'));
     							item.show();
     					}else{
     						item.hide();
     					}
     				});
-    				//$('.header-item-ambiente').hide();
-//    				arr.forEach(function(headerId){
-//    					$(headerId).show();
-//    				});
     			}else{
     				$('.item-ambiente').show();
-    				//$('.header-item-ambiente').show();
     			}
     		});
 			
@@ -149,59 +143,35 @@ var Ambientes = {
 				
 				var arr = [];
 				
-				
-				
+								
 				if(response.data){
 					var data = response.data;
-//					data.forEach(function(ambiente){
-//						if(!me.cadenaIsInArray(ambiente.unidad.idUnidad,arr)){
-//							arr.push(ambiente.unidad.idUnidad);
-//						}
-//					});
-//					
-//					var mapData = {};
-//					
-//					arr.forEach(function(key){
-//						mapData[key] = me.getListFlonKey(key,data);
-//					});
 					
 					$('.comtent-items-ambiente').empty();
-//					var arrTemp = null;
-//					var valorInicialAmbiente=0;
-//					var descripcionInicialUnidad='';
-//					Object.keys(mapData).forEach(function(key) {
-//						
-//						arrTemp = mapData[key];
-//						if(arrTemp){
-//
-//							arrTemp.forEach(function(item){
-//								valorInicialAmbiente++;
-//								if(valorInicialAmbiente==1){
-//									valorInicialAmbiente=item.idAmbiente;
-//									descripcionInicialUnidad=arrTemp[0].unidad.nombre;
-//									
-//									$('.comtent-items-ambiente').append('<div class="item-ambiente item-ambiente-selected" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="'+mapData[key][0].unidad.nombre+'" data-infraestructura="'+'padre-'+key+'">'+
-//											''+item.nombre+
-//											(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
-//										 '</div>');
-//								}else{
-//									$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="'+mapData[key][0].unidad.nombre+'" data-infraestructura="'+'padre-'+key+'">'+
-//											''+item.nombre+
-//											(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
-//										 '</div>');
-//								}
-//						
-//							});
-//						}
-//					});
-					
+
+					var valorInicialAmbiente=0;
+					var descripcionInicialUnidad='';
+
 					
 					data.forEach(function(item){
-						$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="" data-infraestructura="">'+
+					valorInicialAmbiente++;
+					if(valorInicialAmbiente==1){
+						valorInicialAmbiente=item.idAmbiente;
+						descripcionInicialUnidad=item.unidad.nombre;
+						
+						$('.comtent-items-ambiente').append('<div class="item-ambiente item-ambiente-selected" data-idambiente="'+item.idAmbiente+'" data-descinfranombre="'+descripcionInicialUnidad+'" data-infraestructura="">'+
 								''+item.nombre+
 								(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
 							 '</div>');
+					}else{
+					
+						$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-descinfranombre="'+item.unidad.nombre+'"  data-infraestructura="">'+
+								''+item.nombre+
+								(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
+							 '</div>');
+						}
 					});
+					
 					
 					
 					
