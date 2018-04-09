@@ -3,6 +3,8 @@ package com.udep.siga.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +37,7 @@ public class AmbienteService {
 	@Autowired
 	private AmbienteDAO ambienteDAO;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Ambiente> getAmbientes(Integer idUnidad) {
 
 		Alumno alumno = usuarioService.getInfoUsuario();
@@ -122,14 +125,20 @@ public class AmbienteService {
 		            ambiente.setUnidad(unida);
 		            ambiente.setNombre(list.get(i).getNombre());
 		            ambiente.setReservable(list.get(i).getReservable());
+		            ambiente.setCantidadHorario(contadorHorarios);
 		            listFinal.add(ambiente);
 					
 				}
-				
 			}
-			
 		}
 
+		Collections.sort(listFinal, new Comparator<Ambiente>() {
+			public int compare(Ambiente p1, Ambiente p2) {
+				// Aqui esta el truco, ahora comparamos p2 con p1 y no al reves como antes
+				return new Integer(p2.getCantidadHorario()).compareTo(new Integer(p1.getCantidadHorario()));
+			}
+		});
+		
 		return listFinal;
 	}
 

@@ -16,7 +16,7 @@ public class Ambiente implements Serializable{
 	private Piso piso;
 	private SedeInfraestructura sedeInfraestructura;
 	private Unidad unidad;
-	
+	private int cantidadHorario;
 	
 	public int getIdAmbiente() {
 		return idAmbiente;
@@ -83,6 +83,12 @@ public class Ambiente implements Serializable{
 	}
 	public void setUnidad(Unidad unidad) {
 		this.unidad = unidad;
+	}
+	public int getCantidadHorario() {
+		return cantidadHorario;
+	}
+	public void setCantidadHorario(int cantidadHorario) {
+		this.cantidadHorario = cantidadHorario;
 	} 
 	
 	
