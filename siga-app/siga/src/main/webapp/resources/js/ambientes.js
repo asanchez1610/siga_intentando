@@ -197,6 +197,9 @@ var Ambientes = {
 					
 					
 					data.forEach(function(item){
+						console.log(item);
+						valorInicialAmbiente=item.idAmbiente;
+						descripcionInicialUnidad=item.unidad.nombre;
 						$('.comtent-items-ambiente').append('<div class="item-ambiente" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="" data-infraestructura="">'+
 								''+item.nombre+
 								(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
