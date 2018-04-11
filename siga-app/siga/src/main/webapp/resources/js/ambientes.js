@@ -200,19 +200,15 @@ var Ambientes = {
 					
 					var ind = 0
 					data.forEach(function(item){
-
 						$('.comtent-items-ambiente').append('<div class="item-ambiente '+(ind == 0 ? 'item-ambiente-selected':'')+'" data-idambiente="'+item.idAmbiente+'" data-descInfraNombre="'+item.unidad.nombre+'" data-infraestructura="">'+
 								''+item.nombre+
 								(item.piso && item.piso.nombre?'<br><small>'+item.piso.nombre+'</small>':'')+
 							 '</div>');
-						
 						if(ind == 0){
 							valorInicialAmbiente=item.idAmbiente;
 							descripcionInicialUnidad=item.unidad.nombre;
 						}
-						
 						ind++;
-						
 					});
 					if(ind > 0){
 						me.agregarEventos();
