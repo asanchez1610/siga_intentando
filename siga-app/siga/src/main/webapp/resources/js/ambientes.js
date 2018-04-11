@@ -45,11 +45,14 @@ var Ambientes = {
 
         	//Busqueda de ambientes
     		$('#txtBusqueda').keyup(function(){
-    			$('.horario').hide();
+    			
+    			
     			var b = $(this);
     			var arr = [];
 
     			if(b.val().length > 1 ){
+    				$('.item-ambiente').removeClass('item-ambiente-selected');
+    				$('.horario').hide();
     				$('.item-ambiente').each(function(){
     				var item = $(this);
     					if(item.html().toLowerCase().indexOf(b.val().toLowerCase()) >= 0){
@@ -206,15 +209,18 @@ var Ambientes = {
 						if(ind == 0){
 							valorInicialAmbiente=item.idAmbiente;
 							descripcionInicialUnidad=item.unidad.nombre;
-							ind++;
 						}
 						
+						ind++;
+						
 					});
+					if(ind > 0){
+						me.agregarEventos();
+						me.mostrarHorariosDiponibles(valorInicialAmbiente, descripcionInicialUnidad);
+					}else{
+						$('.comtent-items-ambiente').html('No hay Ambientes disponibles en este momento.');
+					}
 					
-					
-					
-					me.agregarEventos();
-					me.mostrarHorariosDiponibles(valorInicialAmbiente, descripcionInicialUnidad);
 				}else{
 					$('.comtent-items-ambiente').html('No hay Ambientes disponibles en este momento.');
 				}

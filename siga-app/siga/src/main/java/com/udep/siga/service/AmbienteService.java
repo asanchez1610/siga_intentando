@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -134,7 +135,8 @@ public class AmbienteService {
 			}
 		}
 		
-		listFinal.sort(new Comparator<Ambiente>() {
+
+		Collections.sort(listFinal,new Comparator<Ambiente>() {
 			public int compare(Ambiente p1, Ambiente p2) {
 				BigDecimal v1 = new BigDecimal(p1.getCantidadHorario());
 				BigDecimal v2 = new BigDecimal(p2.getCantidadHorario());
