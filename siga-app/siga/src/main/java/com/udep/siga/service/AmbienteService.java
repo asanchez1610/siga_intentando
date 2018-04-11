@@ -136,10 +136,6 @@ public class AmbienteService {
 		
 		listFinal.sort(new Comparator<Ambiente>() {
 			public int compare(Ambiente p1, Ambiente p2) {
-				// Aqui esta el truco, ahora comparamos p2 con p1 y no al reves como antes
-				System.out.println(p2.getNombre() +" -- "+p1.getNombre());
-				System.out.println(p2.getCantidadHorario()+" -- "+p1.getCantidadHorario());
-//				return p2.getCantidadHorario() > p1.getCantidadHorario() ? 1 : p2.getCantidadHorario() < p1.getCantidadHorario() ? -1 : 0;
 				BigDecimal v1 = new BigDecimal(p1.getCantidadHorario());
 				BigDecimal v2 = new BigDecimal(p2.getCantidadHorario());
 				return v2.compareTo(v1);
