@@ -143,8 +143,8 @@ var Ambientes = {
 				
 				var arr = [];
 				
-								
-				if(response.data){
+						
+				if(response.data && response.data.length>0){
 					var data = response.data;
 					
 					$('.comtent-items-ambiente').empty();
